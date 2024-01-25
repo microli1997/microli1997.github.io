@@ -1,3 +1,4 @@
+http://example.com/posts/8779c14a/
 http://example.com/posts/b4ee29f3/
 http://example.com/posts/89793def/
 http://example.com/posts/2916158c/
@@ -17,7 +18,7 @@ http://example.com/tags/private/
 http://example.com/tags/Git/
 http://example.com/tags/V8/
 http://example.com/categories/%E5%BF%83%E5%BE%97/
-http://example.com/categories/Effective-java/
 http://example.com/categories/%E6%9E%B6%E6%9E%84/
 http://example.com/categories/%E8%99%9A%E6%8B%9F%E6%9C%BA/
+http://example.com/categories/Effective-java/
 http://example.com/categories/%E7%BD%91%E7%BB%9C/
