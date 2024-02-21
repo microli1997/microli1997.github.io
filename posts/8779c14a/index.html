@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="重写 equals 时请遵守通用约定重写 equals 方法看起来似乎很简单，但是有许多重写方式会出现错误，而且后果非常严重。最容易避免这类问题的办法就是不覆盖 equals 方法，在这种情况下，类的每个实例都只能与它自身相等。如果满足了以下任何一个条件，那就是正确的做法：  类的每个实例都是唯一的。 例如 Thread。Object 提供的 equals 实现对这些类具有完全满足的行为。 不关心">
+    <meta name="description" content="重写 equals 时请遵守通用约定重写 equals 方法看起来似乎很简单，但是有许多重写方式会出现错误，而且后果非常严重。最容易避免这类问题的办法就是不覆盖 equals 方法，在这种情况下，类的每个实例都只能与它自身相等。如果满足了以下任何一个条件，那就是正确的做法：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对于所有对象都通用的方法">
 <meta property="og:url" content="http://example.com/posts/8779c14a/index.html">
 <meta property="og:site_name" content="海纳百川">
-<meta property="og:description" content="重写 equals 时请遵守通用约定重写 equals 方法看起来似乎很简单，但是有许多重写方式会出现错误，而且后果非常严重。最容易避免这类问题的办法就是不覆盖 equals 方法，在这种情况下，类的每个实例都只能与它自身相等。如果满足了以下任何一个条件，那就是正确的做法：  类的每个实例都是唯一的。 例如 Thread。Object 提供的 equals 实现对这些类具有完全满足的行为。 不关心">
+<meta property="og:description" content="重写 equals 时请遵守通用约定重写 equals 方法看起来似乎很简单，但是有许多重写方式会出现错误，而且后果非常严重。最容易避免这类问题的办法就是不覆盖 equals 方法，在这种情况下，类的每个实例都只能与它自身相等。如果满足了以下任何一个条件，那就是正确的做法：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-24T03:05:37.000Z">
-<meta property="article:modified_time" content="2024-01-25T02:06:55.630Z">
+<meta property="article:modified_time" content="2024-02-21T02:09:36.106Z">
 <meta property="article:author" content="microli">
 <meta property="article:tag" content="JAVA, TS, 安卓">
 <meta name="twitter:card" content="summary">
@@ -140,7 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%86%99-equals-%E6%97%B6%E8%AF%B7%E9%81%B5%E5%AE%88%E9%80%9A%E7%94%A8%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">重写 equals 时请遵守通用约定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BD%93%E9%87%8D%E5%86%99-equals-%E6%96%B9%E6%B3%95%E6%97%B6%E6%80%BB%E8%A6%81%E9%87%8D%E5%86%99-hashCode-%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">当重写 equals 方法时总要重写 hashCode 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%8B%E7%BB%88%E9%87%8D%E5%86%99-toString-%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">始终重写 toString 方法</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%86%99-equals-%E6%97%B6%E8%AF%B7%E9%81%B5%E5%AE%88%E9%80%9A%E7%94%A8%E7%BA%A6%E5%AE%9A"><span class="nav-number">1.</span> <span class="nav-text">重写 equals 时请遵守通用约定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BD%93%E9%87%8D%E5%86%99-equals-%E6%96%B9%E6%B3%95%E6%97%B6%E6%80%BB%E8%A6%81%E9%87%8D%E5%86%99-hashCode-%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">当重写 equals 方法时总要重写 hashCode 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%8B%E7%BB%88%E9%87%8D%E5%86%99-toString-%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">始终重写 toString 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%A8%E6%85%8E%E5%9C%B0%E9%87%8D%E5%86%99-clone-%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">谨慎地重写 clone 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%83%E8%99%91%E5%AE%9E%E7%8E%B0-Comparable-%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">考虑实现 Comparable 接口</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -259,7 +259,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>465</span>
+      <span>485</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -277,6 +277,8 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="重写-equals-时请遵守通用约定"><a href="#重写-equals-时请遵守通用约定" class="headerlink" title="重写 equals 时请遵守通用约定"></a>重写 equals 时请遵守通用约定</h1><p>重写 equals 方法看起来似乎很简单，但是有许多重写方式会出现错误，而且后果非常严重。最容易避免这类问题的办法就是不覆盖 equals 方法，在这种情况下，类的每个实例都只能与它自身相等。如果满足了以下任何一个条件，那就是正确的做法：</p>
+<span id="more"></span>
+
 <ol>
 <li><strong>类的每个实例都是唯一的。</strong> 例如 Thread。Object 提供的 equals 实现对这些类具有完全满足的行为。</li>
 <li><strong>不关心类是否提供了“逻辑相等（logical equality）”的测试功能。</strong> 例如，java.util.regex.Pattern 。</li>
@@ -284,9 +286,11 @@
 <li><strong>类是私有的或者是包级私有的，可以确定它的 equals 方法永远不会被调用。</strong></li>
 </ol>
 <p>那么什么时候重写 equals 方法才是合适的呢？当一个类具有逻辑相等的概念时（不同于对象本身相同的概念），而超类还没有重写 equals。 这通常是“值类（value class）”的情况。值类指的是只表示值的类，例如 Integer 或 String。程序猿在利用 equals 方法来比较对象的引用时，希望知道它们在逻辑上是否相等，而不是想了解它们是否引用了相同的对象。</p>
+<p><code>to do</code></p>
 <h1 id="当重写-equals-方法时总要重写-hashCode-方法"><a href="#当重写-equals-方法时总要重写-hashCode-方法" class="headerlink" title="当重写 equals 方法时总要重写 hashCode 方法"></a>当重写 equals 方法时总要重写 hashCode 方法</h1><p>相等的对象必须具有相等的散列码（hash code）。</p>
 <h1 id="始终重写-toString-方法"><a href="#始终重写-toString-方法" class="headerlink" title="始终重写 toString 方法"></a>始终重写 toString 方法</h1><p>提供一个好的 toString 实现会使你的类使用起来更加愉快，并使使用该类的系统更容易调试。</p>
-
+<h1 id="谨慎地重写-clone-方法"><a href="#谨慎地重写-clone-方法" class="headerlink" title="谨慎地重写 clone 方法"></a>谨慎地重写 clone 方法</h1><p><code>to do</code></p>
+<h1 id="考虑实现-Comparable-接口"><a href="#考虑实现-Comparable-接口" class="headerlink" title="考虑实现 Comparable 接口"></a>考虑实现 Comparable 接口</h1>
     </div>
 
     
@@ -350,6 +354,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/posts/15ea71ed/" rel="next" title="类和接口">
+                  类和接口 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
