@@ -1,3 +1,5 @@
+http://example.com/posts/6b801e23/
+http://example.com/posts/51ea29d7/
 http://example.com/posts/33481a84/
 http://example.com/posts/4767ff81/
 http://example.com/posts/1684077/
@@ -30,4 +32,5 @@ http://example.com/categories/API/
 http://example.com/categories/%E6%9E%B6%E6%9E%84/
 http://example.com/categories/%E8%99%9A%E6%8B%9F%E6%9C%BA/
 http://example.com/categories/Effective-java/
+http://example.com/categories/TypeScript/
 http://example.com/categories/%E7%BD%91%E7%BB%9C/
