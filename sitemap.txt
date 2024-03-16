@@ -31,13 +31,13 @@ http://example.com/
 http://example.com/tags/private/
 http://example.com/tags/API/
 http://example.com/tags/Git/
-http://example.com/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/
 http://example.com/tags/V8/
+http://example.com/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/
 http://example.com/categories/%E6%97%A5%E8%AE%B0/
 http://example.com/categories/API/
 http://example.com/categories/%E7%BD%91%E7%BB%9C/
 http://example.com/categories/%E6%9E%B6%E6%9E%84/
-http://example.com/categories/java%E5%9F%BA%E7%A1%80/
-http://example.com/categories/Effective-java/
-http://example.com/categories/TypeScript/
 http://example.com/categories/%E8%99%9A%E6%8B%9F%E6%9C%BA/
+http://example.com/categories/Effective-java/
+http://example.com/categories/java%E5%9F%BA%E7%A1%80/
+http://example.com/categories/TypeScript/
