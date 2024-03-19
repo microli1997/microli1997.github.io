@@ -1,3 +1,9 @@
+http://example.com/posts/7b549679/
+http://example.com/posts/4df65dfa/
+http://example.com/posts/5bb05e10/
+http://example.com/posts/2cc69b3b/
+http://example.com/posts/2b96b6af/
+http://example.com/posts/7678a22a/
 http://example.com/posts/a61b637d/
 http://example.com/posts/2461e87f/
 http://example.com/posts/87043860/
@@ -35,6 +41,7 @@ http://example.com/tags/V8/
 http://example.com/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/
 http://example.com/categories/%E6%97%A5%E8%AE%B0/
 http://example.com/categories/API/
+http://example.com/categories/%E5%AE%89%E5%8D%93/
 http://example.com/categories/%E7%BD%91%E7%BB%9C/
 http://example.com/categories/%E6%9E%B6%E6%9E%84/
 http://example.com/categories/%E8%99%9A%E6%8B%9F%E6%9C%BA/
