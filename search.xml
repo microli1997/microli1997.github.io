@@ -8,8 +8,14 @@
       <link href="/posts/e0219194/"/>
       <url>/posts/e0219194/</url>
       
-        <content type="html"><![CDATA[<span id="more"></span>]]></content>
+        <content type="html"><![CDATA[<h1 id="UI-优化的常用手段"><a href="#UI-优化的常用手段" class="headerlink" title="UI 优化的常用手段"></a>UI 优化的常用手段</h1><h2 id="尽量使用硬件加速"><a href="#尽量使用硬件加速" class="headerlink" title="尽量使用硬件加速"></a>尽量使用硬件加速</h2><h2 id="Create-View-优化"><a href="#Create-View-优化" class="headerlink" title="Create View 优化"></a>Create View 优化</h2><ol><li><p>View 的创建也是在 UI 线程里。</p></li><li><p>View 创建的耗时，可能会包括各种 XML 的随机读的 I&#x2F;O 时间、解析 XML 的时间、生成对象的时间（Framework 会大量使用到反射）。</p></li></ol><span id="more"></span><p><strong>1. 使用代码创建</strong></p><p><strong>2. 异步创建</strong></p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(12).png" alt="下载 (12).png"></p><p>在创建完 View 后我们需要把线程的 Looper 恢复成原来的。</p><p><strong>3. View 重用</strong></p><h2 id="measure-layout-优化"><a href="#measure-layout-优化" class="headerlink" title="measure&#x2F;layout 优化"></a>measure&#x2F;layout 优化</h2><ol><li><p>减少 UI 布局层次。例如尽量扁平化，使用<ViewStub> <Merge>等优化。</p></li><li><p>优化 layout 的开销。尽量不使用 RelativeLayout 或者基于 weighted LinearLayout，它们 layout 的开销非常巨大。这里我推荐使用 ConstraintLayout 替代 RelativeLayout 或者 weighted LinearLayout。</p></li><li><p>背景优化。尽量不要重复去设置背景，这里需要注意的是主题背景（theme)， theme 默认会是一个纯色背景，如果我们自定义了界面的背景，那么主题的背景我们来说是无用的。但是由于主题背景是设置在 DecorView 中，所以这里会带来重复绘制，也会带来绘制性能损耗。</p></li></ol><p>Textview 是系统控件中非常强大也非常重要的一个控件，强大的背后就代表着需要做很多计算。在 2018 年的 Google I&#x2F;O 大会，发布了PrecomputedText并已经集成在 Jetpack 中，它给我们提供了接口，可以异步进行 measure 和 layout，不必在主线程中执行。</p><h1 id="UI-优化的进阶手段"><a href="#UI-优化的进阶手段" class="headerlink" title="UI 优化的进阶手段"></a>UI 优化的进阶手段</h1><h2 id="Litho"><a href="#Litho" class="headerlink" title="Litho"></a>Litho</h2><p><strong>1. 异步布局</strong></p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(13).png" alt="下载 (13).png"></p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(14).png" alt="下载 (14).png"></p><p><strong>2. 界面扁平化</strong></p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(15).png" alt="下载 (15).png"></p><p>Litho缺点：适合轻量级页面，交互不复杂的。</p>]]></content>
       
+      
+      <categories>
+          
+          <category> 安卓 </category>
+          
+      </categories>
       
       
     </entry>
