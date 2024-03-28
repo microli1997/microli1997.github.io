@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title>UI渲染优化</title>
+      <link href="/posts/e0219194/"/>
+      <url>/posts/e0219194/</url>
+      
+        <content type="html"><![CDATA[<span id="more"></span>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>UI渲染</title>
+      <link href="/posts/cc16d703/"/>
+      <url>/posts/cc16d703/</url>
+      
+        <content type="html"><![CDATA[<h1 id="CPU-与-GPU"><a href="#CPU-与-GPU" class="headerlink" title="CPU 与 GPU"></a>CPU 与 GPU</h1><p>UI 渲染还依赖两个核心的硬件：CPU 与 GPU。UI 组件在绘制到屏幕之前，都需要经过 Rasterization（栅格化）操作，而栅格化操作又是一个非常耗时的操作。GPU（Graphic Processing Unit ）也就是图形处理器，它主要用于处理图形运算，可以帮助我们加快栅格化操作。</p><p>栅格化：指将指令转化为像素的过程。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD.png" alt="下载.png"></p><p>软件绘制使用的是 Skia 库，它是一款能在低端设备如手机上呈现高质量的 2D 跨平台图形框架，类似 Chrome、Flutter 内部使用的都是 Skia 库。</p><span id="more"></span><h1 id="OpenGL-与-Vulkan"><a href="#OpenGL-与-Vulkan" class="headerlink" title="OpenGL 与 Vulkan"></a>OpenGL 与 Vulkan</h1><p>对于硬件绘制，我们通过调用 OpenGL ES 接口利用 GPU 完成绘制。OpenGL是一个跨平台的图形 API，它为 2D&#x2F;3D 图形处理硬件指定了标准软件接口。而 OpenGL ES 是 OpenGL 的子集，专为嵌入式设备设计。</p><p>在官方<a href="https://developer.android.com/topic/performance/hardware-accel?hl=zh-cn">硬件加速的文档</a>中，可以看到很多 API 都有相应的 Android API level 限制。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(1).png" alt="下载 (1).png"></p><p>这是为什么呢？其实这主要是受OpenGL ES版本与系统支持的限制，直到最新的 Android P，有 3 个 API 是仍然没有支持。对于不支持的 API，我们需要使用软件绘制模式，渲染的性能将会大大降低。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(2).png" alt="下载 (2).png"></p><p>Android 7.0 把 OpenGL ES 升级到最新的 3.2 版本同时，还添加了对Vulkan的支持。Vulkan 是用于高性能 3D 图形的低开销、跨平台 API。相比 OpenGL ES，Vulkan 在改善功耗、多核优化提升绘图调用上有着非常明显的优势。</p><p>重点关注Vulkan。OpenGL已经不在维护了。</p><h1 id="Android-渲染的演进"><a href="#Android-渲染的演进" class="headerlink" title="Android 渲染的演进"></a>Android 渲染的演进</h1><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(3).png" alt="下载 (3).png"></p><p>一个生动的比喻，如果把应用程序图形渲染过程当作一次绘画过程，那么绘画过程中 Android 的各个图形组件的作用是：</p><ol><li><p>画笔：Skia 或者 OpenGL。我们可以用 Skia 画笔绘制 2D 图形，也可以用 OpenGL 来绘制 2D&#x2F;3D 图形。正如前面所说，前者使用 CPU 绘制，后者使用 GPU 绘制。</p></li><li><p>画纸：Surface。所有的元素都在 Surface 这张画纸上进行绘制和渲染。在 Android 中，Window 是 View 的容器，每个窗口都会关联一个 Surface。而 WindowManager 则负责管理这些窗口，并且把它们的数据传递给 SurfaceFlinger。</p></li><li><p>画板：Graphic Buffer。Graphic Buffer 缓冲用于应用程序图形的绘制，在 Android 4.1 之前使用的是双缓冲机制；在 Android 4.1 之后，使用的是三缓冲机制。</p></li><li><p>显示：SurfaceFlinger。它将 WindowManager 提供的所有 Surface，通过硬件合成器 Hardware Composer 合成并输出到显示屏。</p></li></ol><h2 id="Android-4-0：开启硬件加速"><a href="#Android-4-0：开启硬件加速" class="headerlink" title="Android 4.0：开启硬件加速"></a>Android 4.0：开启硬件加速</h2><p>在 Android 3.0 之前，或者没有启用硬件加速时，系统都会使用软件方式来渲染 UI。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(4).png" alt="下载 (4).png"></p><ol><li><p>Surface。每个 View 都由某一个窗口管理，而每一个窗口都关联有一个 Surface。</p></li><li><p>Canvas。通过 Surface 的 lock 函数获得一个 Canvas，Canvas 可以简单理解为 Skia 底层接口的封装。</p></li><li><p>Graphic Buffer。SurfaceFlinger 会帮我们托管一个BufferQueue，我们从 BufferQueue 中拿到 Graphic Buffer，然后通过 Canvas 以及 Skia 将绘制内容栅格化到上面。</p></li><li><p>SurfaceFlinger。通过 Swap Buffer 把 Front Graphic Buffer 的内容交给 SurfaceFinger，最后硬件合成器 Hardware Composer 合成并输出到显示屏。</p></li></ol><p><strong>硬件加速绘制</strong></p><p>所以从 Androd 3.0 开始，Android 开始支持硬件加速，到 Android 4.0 时，默认开启硬件加速。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(5).png" alt="下载 (5).png"></p><p>硬件加速绘制与软件绘制整个流程差异非常大，最核心就是我们通过 GPU 完成 Graphic Buffer 的内容绘制。此外硬件绘制还引入了一个 DisplayList 的概念，每个 View 内部都有一个 DisplayList，当某个 View 需要重绘时，将它标记为 Dirty。</p><p>当需要重绘时，仅仅只需要重绘一个 View 的 DisplayList，而不是像软件绘制那样需要向上递归。这样可以大大减少绘图的操作数量，因而提高了渲染效率。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(6).png" alt="下载 (6).png"></p><h2 id="Android-4-1：Project-Butter"><a href="#Android-4-1：Project-Butter" class="headerlink" title="Android 4.1：Project Butter"></a>Android 4.1：Project Butter</h2><p>Project Butter 主要包含两个组成部分，一个是 VSYNC，一个是 Triple Buffering。</p><p><strong>VSYNC 信号</strong></p><p>在讲文件 I&#x2F;O 跟网络 I&#x2F;O 的时候，我讲到过中断的概念。对于 Android 4.0，CPU 可能会因为在忙别的事情，导致没来得及处理 UI 绘制。</p><p>为解决这个问题，Project Buffer 引入了VSYNC，它类似于时钟中断。每收到 VSYNC 中断，CPU 会立即准备 Buffer 数据，由于大部分显示设备刷新频率都是 60Hz（一秒刷新 60 次），也就是说一帧数据的准备工作都要在 16ms 内完成。</p><p>这样应用总是在 VSYNC 边界上开始绘制，而 SurfaceFlinger 总是 VSYNC 边界上进行合成。这样可以消除卡顿，并提升图形的视觉表现。</p><p><strong>三缓冲机制 Triple Buffering</strong></p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(7).png" alt="下载 (7).png"></p><p>在 Android 4.1 之前，Android 使用双缓冲机制。怎么理解呢？一般来说，不同的 View 或者 Activity 它们都会共用一个 Window，也就是共用同一个 Surface。</p><p>而每个 Surface 都会有一个 BufferQueue 缓存队列，但是这个队列会由 SurfaceFlinger 管理，通过匿名共享内存机制与 App 应用层交互。</p><p>整个流程如下：</p><p>每个 Surface 对应的 BufferQueue 内部都有两个 Graphic Buffer ，一个用于绘制一个用于显示。我们会把内容先绘制到离屏缓冲区（OffScreen Buffer），在需要显示时，才把离屏缓冲区的内容通过 Swap Buffer 复制到 Front Graphic Buffer 中。</p><p>这样 SurfaceFlinge 就拿到了某个 Surface 最终要显示的内容，但是同一时间我们可能会有多个 Surface。这里面可能是不同应用的 Surface，也可能是同一个应用里面类似 SurefaceView 和 TextureView，它们都会有自己单独的 Surface。</p><p>这个时候 SurfaceFlinger 把所有 Surface 要显示的内容统一交给 Hareware Composer，它会根据位置、Z-Order 顺序等信息合成为最终屏幕需要显示的内容，而这个内容会交给系统的帧缓冲区 Frame Buffer 来显示（Frame Buffer 是非常底层的，可以理解为屏幕显示的抽象）。</p><p>如果你理解了双缓冲机制的原理，那就非常容易理解什么是三缓冲区了。如果只有两个 Graphic Buffer 缓存区 A 和 B，如果 CPU&#x2F;GPU 绘制过程较长，超过了一个 VSYNC 信号周期，因为缓冲区 B 中的数据还没有准备完成，所以只能继续展示 A 缓冲区的内容，这样缓冲区 A 和 B 都分别被显示设备和 GPU 占用，CPU 无法准备下一帧的数据。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(8).png" alt="下载 (8).png"></p><p>如果再提供一个缓冲区，CPU、GPU 和显示设备都能使用各自的缓冲区工作，互不影响。简单来说，三缓冲机制就是在双缓冲机制基础上增加了一个 Graphic Buffer 缓冲区，这样可以最大限度的利用空闲时间，带来的坏处是多使用的了一个 Graphic Buffer 所占用的内存。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(9).png" alt="下载 (9).png"></p><p>对于 VSYNC 信号和 Triple Buffering 更详细的介绍，可以参考<a href="https://blog.csdn.net/innost/article/details/8272867">《Android Project Butter 分析》</a>。</p><h2 id="Android-5-0：RenderThread"><a href="#Android-5-0：RenderThread" class="headerlink" title="Android 5.0：RenderThread"></a>Android 5.0：RenderThread</h2><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(10).png" alt="下载 (10).png"></p><p>在 Android 5.0 引入了两个比较大的改变。一个是引入了 RenderNode 的概念，它对 DisplayList 及一些 View 显示属性做了进一步封装。另一个是引入了 RenderThread，所有的 GL 命令执行都放到这个线程上，渲染线程在 RenderNode 中存有渲染帧的所有信息，可以做一些属性动画，这样即便主线程有耗时操作的时候也可以保证动画流畅。</p><p><img src="/../images/%E4%B8%8B%E8%BD%BD%20(11).png" alt="下载 (11).png"></p><h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ol><li>20 | UI 优化（上）：UI 渲染的几个关键概念</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 安卓 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>字节码插桩</title>
+      <link href="/posts/cad98d1c/"/>
+      <url>/posts/cad98d1c/</url>
+      
+        <content type="html"><![CDATA[<span id="more"></span>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Gradle</title>
+      <link href="/posts/18596a3e/"/>
+      <url>/posts/18596a3e/</url>
+      
+        <content type="html"><![CDATA[<span id="more"></span>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ANR全面解析</title>
       <link href="/posts/c6084ae/"/>
       <url>/posts/c6084ae/</url>
