@@ -452,15 +452,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/2461e87f/</loc>
-    
-    <lastmod>2024-07-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/posts/1562b2a5/</loc>
     
     <lastmod>2024-07-04</lastmod>
@@ -471,6 +462,15 @@
   
   <url>
     <loc>http://example.com/posts/ff82d35e/</loc>
+    
+    <lastmod>2024-07-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/posts/2461e87f/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -515,7 +515,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/c6084ae/</loc>
+    <loc>http://example.com/posts/92933cdb/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -524,7 +524,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/92933cdb/</loc>
+    <loc>http://example.com/posts/c6084ae/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -543,6 +543,15 @@
   
   <url>
     <loc>http://example.com/posts/737f3f95/</loc>
+    
+    <lastmod>2024-07-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/posts/ea5de885/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -578,7 +587,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/ea5de885/</loc>
+    <loc>http://example.com/posts/18596a3e/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -596,7 +605,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/18596a3e/</loc>
+    <loc>http://example.com/posts/2cc69b3b/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -606,15 +615,6 @@
   
   <url>
     <loc>http://example.com/posts/4df65dfa/</loc>
-    
-    <lastmod>2024-07-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/posts/2cc69b3b/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -704,6 +704,15 @@
   </url>
   
   <url>
+    <loc>http://example.com/posts/b4ee29f3/</loc>
+    
+    <lastmod>2024-07-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/posts/8779c14a/</loc>
     
     <lastmod>2024-07-04</lastmod>
@@ -722,7 +731,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/b4ee29f3/</loc>
+    <loc>http://example.com/posts/f1b25278/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -732,15 +741,6 @@
   
   <url>
     <loc>http://example.com/posts/15ea71ed/</loc>
-    
-    <lastmod>2024-07-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/posts/f1b25278/</loc>
     
     <lastmod>2024-07-04</lastmod>
     
@@ -794,7 +794,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/87043860/</loc>
+    <loc>http://example.com/posts/217333d4/</loc>
     
     <lastmod>2024-06-18</lastmod>
     
@@ -803,7 +803,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/posts/217333d4/</loc>
+    <loc>http://example.com/posts/87043860/</loc>
     
     <lastmod>2024-06-18</lastmod>
     
@@ -883,13 +883,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/JAVA/</loc>
-    <lastmod>2025-03-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/JAVAEE/</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -897,14 +890,21 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/TS/</loc>
+    <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/EFFECTIVE-JAVA/</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/EFFECTIVE-JAVA/</loc>
+    <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/JAVA/</loc>
+    <lastmod>2025-03-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/%E6%8A%80%E6%9C%AF/TS/</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -974,14 +974,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E4%B9%A6%E7%B1%8D/</loc>
+    <loc>http://example.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%BF%83%E5%BE%97/</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%BF%83%E5%BE%97/</loc>
+    <loc>http://example.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E7%BB%8F%E5%85%B8%E4%B9%A6%E7%B1%8D/</loc>
     <lastmod>2025-03-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
