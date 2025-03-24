@@ -150,13 +150,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">91</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -183,6 +183,122 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/posts/4df65dfa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="microli">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="海纳百川">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 海纳百川">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/4df65dfa/" class="post-title-link" itemprop="url">JNI如何实现数据传递？</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-18 17:28:33" itemprop="dateCreated datePublished" datetime="2024-03-18T17:28:33+08:00">2024-03-18</time>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/posts/4df65dfa/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/posts/4df65dfa/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="waline-pageview-count" data-path="/posts/4df65dfa/"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>371</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="java-Bitmap-和-Native-Bitmap-如何关联"><a href="#java-Bitmap-和-Native-Bitmap-如何关联" class="headerlink" title="java Bitmap 和 Native Bitmap 如何关联"></a>java Bitmap 和 Native Bitmap 如何关联</h1><ol>
+<li>通过在Java层Bitmap.java持有的private final long mNativePtr（指针），这个mNativePtr就是Native层的Bitmap.h&#x2F;cpp的指针。通过指针关联。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Java层Native方法</span></span><br><span class="line"><span class="comment">// 该方法用于压缩Bitmap到stream（流）里面。</span></span><br><span class="line"><span class="comment">// nativeBitmap是指针，对应的底层Native函数中的bitmapHandle参数，然后在底层函数中使用bitmapHandle传入到bitmap(bitmapHandle)函数中，获取到对应的底层Bitmap对象，获取到之后就可以操作底层的Bitmap了。</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="type">boolean</span> <span class="title function_">nativeCompress</span><span class="params">(<span class="type">long</span> nativeBitmap, <span class="type">int</span> format, <span class="type">int</span> quality, OutputStream stream, <span class="type">byte</span>[] tempStorage)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 底层Native函数</span></span><br><span class="line"><span class="keyword">static</span> jboolean <span class="title function_">Bitmap_compress</span><span class="params">(JNIEnv* env, jobject clazz, jlong bitmapHandle, jint format, jint quality, jobject jstream, jbyteArray jstorage)</span> &#123;</span><br><span class="line">LocalScopeBitmap <span class="title function_">bitmap</span><span class="params">(bitmapHandle)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/4df65dfa/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1227,122 +1343,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/posts/6b801e23/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/author.jpg">
-      <meta itemprop="name" content="microli">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="海纳百川">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 海纳百川">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/6b801e23/" class="post-title-link" itemprop="url">理解原始类型与对象类型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-27 11:56:06" itemprop="dateCreated datePublished" datetime="2024-02-27T11:56:06+08:00">2024-02-27</time>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/posts/6b801e23/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/posts/6b801e23/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-item" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="waline-pageview-count" data-path="/posts/6b801e23/"></span>
-    </span>
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>814</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="原始类型的类型标注"><a href="#原始类型的类型标注" class="headerlink" title="原始类型的类型标注"></a>原始类型的类型标注</h1><p>除了最常见的number &#x2F; string &#x2F; boolean &#x2F; null &#x2F; undefined， ECMAScript 2015（ES6）、2020 (ES11)又分别引入了2个新的原始类型：symbol与bigint 。在TypeScript中它们都有对应的类型注解：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">name</span>: <span class="built_in">string</span> = <span class="string">&#x27;linbudu&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">age</span>: <span class="built_in">number</span> = <span class="number">24</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">male</span>: <span class="built_in">boolean</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">undef</span>: <span class="literal">undefined</span> = <span class="literal">undefined</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">nul</span>: <span class="literal">null</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">obj</span>: <span class="built_in">object</span> = &#123; name, age, male &#125;;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bigintVar1</span>: <span class="built_in">bigint</span> = <span class="number">9007199254740991n</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">bigintVar2</span>: <span class="built_in">bigint</span> = <span class="title class_">BigInt</span>(<span class="number">9007199254740991</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="attr">symbolVar</span>: <span class="built_in">symbol</span> = <span class="title class_">Symbol</span>(<span class="string">&#x27;unique&#x27;</span>);</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/6b801e23/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
